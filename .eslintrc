@@ -1,0 +1,76 @@
+{
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "plugins": [
+    "babel",
+    "import"
+  ],
+  "env": {
+    "node": true,
+    "jest": true,
+    "es6": true
+  },
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaVersion": 9,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "globalReturn": true,
+      "impliedStrict": true
+    }
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
+    "no-return-await": "error",
+    "import/no-commonjs": 2,
+    "import/no-duplicates": 2,
+    "import/newline-after-import": 1,
+    "lines-between-class-members": 2,
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 2,
+        "maxEOF": 1
+      }
+    ],
+    "lines-around-comment": [
+      "error",
+      {
+        "beforeBlockComment": true,
+        "allowBlockStart": true,
+        "allowArrayStart": true,
+        "allowArrayEnd": true,
+        "allowObjectStart": true,
+        "allowObjectEnd": true
+      }
+    ],
+    "quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
+    "no-await-in-loop": "error",
+    "object-shorthand": ["error", "properties"],
+    "prefer-const": "error",
+    "max-len": [
+      "error",
+      {
+        "code": 100,
+        "ignoreComments": true,
+        "ignoreUrls": true,
+        "ignoreStrings": true,
+        "ignoreTemplateLiterals": true,
+        "ignoreRegExpLiterals": true
+      }
+    ],
+    "no-invalid-this": "off",
+    "babel/no-invalid-this": "error"
+  }
+}

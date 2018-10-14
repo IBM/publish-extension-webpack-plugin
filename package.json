@@ -1,0 +1,62 @@
+{
+  "name": "publish-extension-webpack-plugin",
+  "version": "1.0.0",
+  "description": "A webpack plugin that publishes extension builds to the Chrome Web Store.",
+  "author": "Borja Canseco <borj@cans.eco> (https://borja.io)",
+  "repository": "github:bcanseco/publish-extension-webpack-plugin",
+  "homepage": "https://github.com/bcanseco/publish-extension-webpack-plugin",
+  "bugs": "https://github.com/bcanseco/publish-extension-webpack-plugin/issues",
+  "license": "MIT",
+  "keywords": [
+    "chrome",
+    "extension",
+    "publish",
+    "webext",
+    "webextension",
+    "webpack-plugin",
+    "webpack"
+  ],
+  "files": [
+    "dist"
+  ],
+  "main": "dist/publish-extension-webpack-plugin.js",
+  "scripts": {
+    "example": "webpack --config example/webpack.config.babel.js",
+    "start": "webpack",
+    "test": "jest",
+    "lint": "eslint .",
+    "vuln": "npm-audit-ci",
+    "prepack": "npm start"
+  },
+  "peerDependencies": {
+    "webpack": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.1.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.1.2",
+    "babel-core": "^7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "bestzip": "^2.1.2",
+    "chrome-webstore-upload": "^0.2.2",
+    "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.3",
+    "dotenv-safe": "^6.1.0",
+    "eslint": "^5.7.0",
+    "eslint-config-google": "^0.11.0",
+    "eslint-plugin-babel": "^5.2.1",
+    "eslint-plugin-import": "^2.14.0",
+    "jest": "^23.6.0",
+    "npm-audit-ci": "^1.0.1",
+    "schema-utils": "^1.0.0",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2",
+    "webpack-log": "^2.0.0"
+  }
+}

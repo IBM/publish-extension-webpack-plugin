@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "path": {
+      "type": "string"
+    },
+    "keepBundleOnSuccess": {
+      "type": "boolean"
+    },
+    "silent": {
+      "type": "boolean"
+    },
+    "extensionId": {
+      "type": "string"
+    },
+    "clientId": {
+      "type": "string"
+    },
+    "clientSecret": {
+      "type": "string"
+    },
+    "refreshToken": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

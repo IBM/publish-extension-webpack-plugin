@@ -1,0 +1,16 @@
+{
+  "version": "1.0.0",
+  "name": "Example",
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "js": [
+        "example.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}
