@@ -133,7 +133,7 @@ PRs are welcome! Please see the [contributing guide](.github/CONTRIBUTING.md).
 
 [npm]: https://img.shields.io/npm/v/publish-extension-webpack-plugin.svg
 [npm-url]: https://npmjs.com/package/publish-extension-webpack-plugin
-[travis]: https://travis-ci.com/bcanseco/publish-extension-webpack-plugin.svg?token=9VVzrEozksMDDXLXzX2c&branch=master
-[travis-url]: https://travis-ci.com/bcanseco/publish-extension-webpack-plugin
-[cover]: https://img.shields.io/codecov/c/token/c8XHxc7gSq/github/bcanseco/publish-extension-webpack-plugin.svg
-[cover-url]: https://codecov.io/gh/bcanseco/publish-extension-webpack-plugin
+[travis]: https://travis-ci.com/IBM/publish-extension-webpack-plugin.svg?branch=master
+[travis-url]: https://travis-ci.com/IBM/publish-extension-webpack-plugin
+[cover]: https://img.shields.io/codecov/c/github/IBM/publish-extension-webpack-plugin.svg
+[cover-url]: https://codecov.io/gh/IBM/publish-extension-webpack-plugin

@@ -19,7 +19,7 @@ Thanks for your interest in contributing! ❤
 ## Installing
 
 ```console
-$ git clone https://github.com/bcanseco/publish-extension-webpack-plugin
+$ git clone https://github.com/ibm/publish-extension-webpack-plugin
 $ cd publish-extension-webpack-plugin
 $ npm install
 ```

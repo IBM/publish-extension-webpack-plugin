@@ -1,12 +1,12 @@
 {
   "name": "publish-extension-webpack-plugin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A webpack plugin that publishes extension builds to the Chrome Web Store.",
   "author": "Borja Canseco <borj@cans.eco> (https://borja.io)",
-  "repository": "github:bcanseco/publish-extension-webpack-plugin",
-  "homepage": "https://github.com/bcanseco/publish-extension-webpack-plugin",
-  "bugs": "https://github.com/bcanseco/publish-extension-webpack-plugin/issues",
-  "license": "MIT",
+  "repository": "github:ibm/publish-extension-webpack-plugin",
+  "homepage": "https://github.com/ibm/publish-extension-webpack-plugin",
+  "bugs": "https://github.com/ibm/publish-extension-webpack-plugin/issues",
+  "license": "Apache-2.0",
   "keywords": [
     "chrome",
     "extension",
