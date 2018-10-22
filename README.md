@@ -55,6 +55,20 @@ new PublishExtensionPlugin({
 })
 ```
 
+### `throwOnFailure`
+
+Type: `Boolean`
+Default: `false`
+
+By default, the plugin only logs any errors encountered while publishing. Set this to `true` to additionally throw an error.
+
+```js
+// in your webpack.config.js
+new PublishExtensionPlugin({
+  throwOnFailure: true,
+})
+```
+
 ### `keepBundleOnSuccess`
 
 Type: `Boolean`

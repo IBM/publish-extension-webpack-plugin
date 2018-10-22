@@ -92,6 +92,21 @@ describe('publish', () => {
     expect(result).toBeFalsy();
     expect(plugin.log.error).toHaveBeenCalled();
   });
+
+  it('should throw error if unsuccessful and options.throwOnFailure is true', async () => {
+    const plugin = new Plugin({silent: true, throwOnFailure: true});
+    plugin.log.error = jest.fn();
+    mockUpload.mockImplementation(() => ({
+      uploadState: 'FAILURE',
+      itemError: [{error_code: '404', error_detail: 'extension not found'}],
+    }));
+
+    try {
+      await plugin.publish('C:\\fakepathtobundle.zip');
+    } catch (err) {
+      expect(err).toBeInstanceOf(Error);
+    }
+  });
 });
 
 describe('apply', () => {

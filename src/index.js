@@ -16,6 +16,7 @@ export default class PublishExtensionPlugin {
    * @param {Object} [options]
    * @param {String} [options.path] Path to a directory containing a manifest.json file.
    * If omitted, webpack's output.path directory will be used.
+   * @param {Boolean} [options.throwOnFailure=false] Set true to throw an error if publishing is unsuccessful.
    * @param {Boolean} [options.keepBundleOnSuccess=false] Set true to keep the ZIP if publishing is successful.
    * @param {Boolean} [options.silent=false] Set true to suppress logging
    * @param {Boolean} [options.disabled=false] Set true to disable the plugin (same as not having it).
@@ -94,6 +95,9 @@ export default class PublishExtensionPlugin {
       return true;
     } else {
       itemError.forEach((err) => this.log.error(`${err.error_code}: ${err.error_detail}`));
+      if (this.options.throwOnFailure) {
+        throw new Error('Failed to publish extension.');
+      }
       return false;
     }
   }
