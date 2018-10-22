@@ -83,6 +83,20 @@ new PublishExtensionPlugin({
 })
 ```
 
+### `disabled`
+
+Type: `Boolean`
+Default: `false`
+
+Set this to `true` to disable the plugin (this is the same as not including it to begin with).
+
+```js
+// in your webpack.config.js
+new PublishExtensionPlugin({
+  disabled: true,
+})
+```
+
 ### `extensionId`
 
 Type: `String`

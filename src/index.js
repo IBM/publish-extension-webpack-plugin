@@ -18,6 +18,7 @@ export default class PublishExtensionPlugin {
    * If omitted, webpack's output.path directory will be used.
    * @param {Boolean} [options.keepBundleOnSuccess=false] Set true to keep the ZIP if publishing is successful.
    * @param {Boolean} [options.silent=false] Set true to suppress logging
+   * @param {Boolean} [options.disabled=false] Set true to disable the plugin (same as not having it).
    * @param {String} [options.extensionId] Your extension's Chrome Web Store ID
    * @param {String} [options.clientId] Google OAuth 2.0 client ID
    * @param {String} [options.clientSecret] Google OAuth 2.0 client secret
@@ -37,7 +38,9 @@ export default class PublishExtensionPlugin {
    * @param {Compiler} compiler
    */
   apply = (compiler) => {
-    compiler.hooks.afterEmit.tapPromise(this.constructor.name, this.afterEmit);
+    if (!this.options.disabled) {
+      compiler.hooks.afterEmit.tapPromise(this.constructor.name, this.afterEmit);
+    }
   }
 
   /**

@@ -104,6 +104,15 @@ describe('apply', () => {
     expect(mockCompiler.hooks.afterEmit.tapPromise)
       .toHaveBeenCalledWith(expect.any(String), plugin.afterEmit);
   });
+
+  it('should do nothing if options.disabled is true', () => {
+    const plugin = new Plugin({disabled: true});
+    const mockCompiler = {hooks: {afterEmit: {tapPromise: jest.fn()}}};
+
+    plugin.apply(mockCompiler);
+
+    expect(mockCompiler.hooks.afterEmit.tapPromise).not.toHaveBeenCalled();
+  });
 });
 
 describe('afterEmit', () => {
