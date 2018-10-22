@@ -41,6 +41,50 @@ And run `webpack` via your preferred method.
 
 ## Options
 
+### `extensionId`
+
+Type: `String`
+Default: `process.env.GOOGLE_EXTENSION_ID`
+
+If not provided via options, this must be present in your environment as `GOOGLE_EXTENSION_ID`. You can get this from your extension's control panel on the [Developer Dashboard](https://chrome.google.com/webstore/devconsole).
+
+```console
+$ GOOGLE_EXTENSION_ID=extensionidgoeshere123 webpack
+```
+
+### `clientId`
+
+Type: `String`
+Default: `process.env.GOOGLE_CLIENT_ID`
+
+If not provided via options, this must be present in your environment as `GOOGLE_CLIENT_ID`. You can get this and your other secret keys by following [this guide](https://developer.chrome.com/webstore/using_webstore_api).
+
+```console
+$ GOOGLE_CLIENT_ID=clientidgoeshere123 webpack
+```
+
+### `clientSecret`
+
+Type: `String`
+Default: `process.env.GOOGLE_CLIENT_SECRET`
+
+If not provided via options, this must be present in your environment as `GOOGLE_CLIENT_SECRET`. You can get this and your other secret keys by following [this guide](https://developer.chrome.com/webstore/using_webstore_api).
+
+```console
+$ GOOGLE_CLIENT_SECRET=clientsecretgoeshere123 webpack
+```
+
+### `refreshToken`
+
+Type: `String`
+Default: `process.env.GOOGLE_REFRESH_TOKEN`
+
+If not provided via options, this must be present in your environment as `GOOGLE_REFRESH_TOKEN`. You can get this and your other secret keys by following [this guide](https://developer.chrome.com/webstore/using_webstore_api).
+
+```console
+$ GOOGLE_REFRESH_TOKEN=refreshtokengoeshere123 webpack
+```
+
 ### `path`
 
 Type: `String`
@@ -109,50 +153,6 @@ Set this to `true` to disable the plugin (this is the same as not including it t
 new PublishExtensionPlugin({
   disabled: true,
 })
-```
-
-### `extensionId`
-
-Type: `String`
-Default: `process.env.GOOGLE_EXTENSION_ID`
-
-If not provided via options, this must be present in your environment as `GOOGLE_EXTENSION_ID`. You can get this from your extension's control panel on the [Developer Dashboard](https://chrome.google.com/webstore/devconsole).
-
-```console
-$ GOOGLE_EXTENSION_ID=extensionidgoeshere123 webpack
-```
-
-### `clientId`
-
-Type: `String`
-Default: `process.env.GOOGLE_CLIENT_ID`
-
-If not provided via options, this must be present in your environment as `GOOGLE_CLIENT_ID`. You can get this and your other secret keys by following [this guide](https://developer.chrome.com/webstore/using_webstore_api).
-
-```console
-$ GOOGLE_CLIENT_ID=clientidgoeshere123 webpack
-```
-
-### `clientSecret`
-
-Type: `String`
-Default: `process.env.GOOGLE_CLIENT_SECRET`
-
-If not provided via options, this must be present in your environment as `GOOGLE_CLIENT_SECRET`. You can get this and your other secret keys by following [this guide](https://developer.chrome.com/webstore/using_webstore_api).
-
-```console
-$ GOOGLE_CLIENT_SECRET=clientsecretgoeshere123 webpack
-```
-
-### `refreshToken`
-
-Type: `String`
-Default: `process.env.GOOGLE_REFRESH_TOKEN`
-
-If not provided via options, this must be present in your environment as `GOOGLE_REFRESH_TOKEN`. You can get this and your other secret keys by following [this guide](https://developer.chrome.com/webstore/using_webstore_api).
-
-```console
-$ GOOGLE_REFRESH_TOKEN=refreshtokengoeshere123 webpack
 ```
 
 ## Contributing

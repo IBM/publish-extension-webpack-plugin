@@ -1,6 +1,18 @@
 {
   "type": "object",
   "properties": {
+    "extensionId": {
+      "type": "string"
+    },
+    "clientId": {
+      "type": "string"
+    },
+    "clientSecret": {
+      "type": "string"
+    },
+    "refreshToken": {
+      "type": "string"
+    },
     "path": {
       "type": "string"
     },
@@ -15,18 +27,6 @@
     },
     "disabled": {
       "type": "boolean"
-    },
-    "extensionId": {
-      "type": "string"
-    },
-    "clientId": {
-      "type": "string"
-    },
-    "clientSecret": {
-      "type": "string"
-    },
-    "refreshToken": {
-      "type": "string"
     }
   },
   "additionalProperties": false

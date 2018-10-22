@@ -14,16 +14,16 @@ import schema from './options';
 export default class PublishExtensionPlugin {
   /**
    * @param {Object} [options]
+   * @param {String} [options.extensionId] Your extension's Chrome Web Store ID
+   * @param {String} [options.clientId] Google OAuth 2.0 client ID
+   * @param {String} [options.clientSecret] Google OAuth 2.0 client secret
+   * @param {String} [options.refreshToken] Google OAuth 2.0 refresh token
    * @param {String} [options.path] Path to a directory containing a manifest.json file.
    * If omitted, webpack's output.path directory will be used.
    * @param {Boolean} [options.throwOnFailure=false] Set true to throw an error if publishing is unsuccessful.
    * @param {Boolean} [options.keepBundleOnSuccess=false] Set true to keep the ZIP if publishing is successful.
    * @param {Boolean} [options.silent=false] Set true to suppress logging
    * @param {Boolean} [options.disabled=false] Set true to disable the plugin (same as not having it).
-   * @param {String} [options.extensionId] Your extension's Chrome Web Store ID
-   * @param {String} [options.clientId] Google OAuth 2.0 client ID
-   * @param {String} [options.clientSecret] Google OAuth 2.0 client secret
-   * @param {String} [options.refreshToken] Google OAuth 2.0 refresh token
    */
   constructor(options = {}) {
     validateOptions(schema, this.options = options, this.constructor.name);
