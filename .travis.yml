@@ -12,6 +12,6 @@ install:
 
 script:
 - npm start
-- npm test -- --coverage && codecov
+- npm test && codecov
 - npm run lint
 - npm run vuln

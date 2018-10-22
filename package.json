@@ -23,7 +23,7 @@
   "scripts": {
     "example": "webpack --config example/webpack.config.babel.js",
     "start": "webpack",
-    "test": "jest",
+    "test": "jest --coverage",
     "lint": "eslint .",
     "vuln": "npm-audit-ci",
     "prepack": "npm start"
