@@ -8,6 +8,7 @@ about: Create a report to help us improve
 |                    SOFTWARE                      | VERSION |
 |-----------------------------------------|------------|
 | `publish-extension-webpack-plugin` |                 |
+| `webpack`                                           |                 |
 | `node`                                                 |                 |
 | `npm`                                                  |                 |
 | Operating system                               |                 |
