@@ -6,6 +6,7 @@ import Logger from 'webpack-log';
 import zip from 'bestzip';
 import ChromeWebStoreClient from 'chrome-webstore-upload';
 import validateOptions from 'schema-utils';
+import {name as packageName} from '../package';
 import schema from './options';
 
 /**
@@ -26,10 +27,10 @@ export default class PublishExtensionPlugin {
    * @param {Boolean} [options.disabled=false] Set true to disable the plugin (same as not having it).
    */
   constructor(options = {}) {
-    validateOptions(schema, this.options = options, this.constructor.name);
+    validateOptions(schema, this.options = options, packageName);
 
     this.log = new Logger({
-      name: this.constructor.name,
+      name: packageName,
       level: this.options.silent ? 'silent' : 'info',
     });
   }
@@ -40,7 +41,7 @@ export default class PublishExtensionPlugin {
    */
   apply = (compiler) => {
     if (!this.options.disabled) {
-      compiler.hooks.afterEmit.tapPromise(this.constructor.name, this.afterEmit);
+      compiler.hooks.afterEmit.tapPromise(packageName, this.afterEmit);
     }
   }
 
