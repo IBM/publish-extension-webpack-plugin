@@ -16,9 +16,6 @@
     "path": {
       "type": "string"
     },
-    "throwOnFailure": {
-      "type": "boolean"
-    },
     "keepBundleOnSuccess": {
       "type": "boolean"
     },

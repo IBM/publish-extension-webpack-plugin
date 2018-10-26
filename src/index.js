@@ -21,7 +21,6 @@ export default class PublishExtensionPlugin {
    * @param {String} [options.refreshToken] Google OAuth 2.0 refresh token
    * @param {String} [options.path] Path to a directory containing a manifest.json file.
    * If omitted, webpack's output.path directory will be used.
-   * @param {Boolean} [options.throwOnFailure=false] Set true to throw an error if publishing is unsuccessful.
    * @param {Boolean} [options.keepBundleOnSuccess=false] Set true to keep the ZIP if publishing is successful.
    * @param {Boolean} [options.silent=false] Set true to suppress logging
    * @param {Boolean} [options.disabled=false] Set true to disable the plugin (same as not having it).
@@ -52,9 +51,9 @@ export default class PublishExtensionPlugin {
   afterEmit = async (compilation) => {
     const {path = compilation.outputOptions.path} = this.options;
     const bundle = await this.makeBundle(path);
-    const isPublishSuccess = await this.publish(bundle);
+    await this.publish(bundle);
 
-    if (isPublishSuccess && !this.options.keepBundleOnSuccess) {
+    if (!this.options.keepBundleOnSuccess) {
       unlinkSync(bundle);
     }
   }
@@ -77,7 +76,6 @@ export default class PublishExtensionPlugin {
   /**
    * Publishes a new zipped extension to the Chrome Web Store.
    * @param {String} bundle path to a ZIP file containing the extension.
-   * @return {Promise<Boolean>} True if the publish succeeded, false otherwise.
    */
   publish = async (bundle) => {
     const {
@@ -88,18 +86,45 @@ export default class PublishExtensionPlugin {
     } = this.options;
 
     const webstore = new ChromeWebStoreClient({extensionId, clientId, clientSecret, refreshToken});
+    const token = await webstore.fetchToken();
     const zipFile = createReadStream(bundle);
-    const {uploadState, itemError} = await webstore.uploadExisting(zipFile);
+
+    await this.uploadZip(webstore, token, zipFile);
+    await this.publishDraft(webstore, token);
+  }
+
+  /**
+   * Uploads a new zipped extension as a draft version that still needs to be published.
+   * @param {ChromeWebStoreClient} webstore Chrome Web Store client used for uploading.
+   * @param {String} token OAuth 2.0 token to authenticate with.
+   * @param {ReadStream} zipFile The zip file to use for the upload.
+   * @throws when the upload fails
+   */
+  uploadZip = async (webstore, token, zipFile) => {
+    const {uploadState, itemError} = await webstore.uploadExisting(zipFile, token);
 
     if (['SUCCESS', 'IN_PROGRESS'].includes(uploadState)) {
-      this.log.info(`Published new extension version (${uploadState}).`);
-      return true;
+      this.log.info(`Uploaded zipped extension (${uploadState}).`);
     } else {
       itemError.forEach((err) => this.log.error(`${err.error_code}: ${err.error_detail}`));
-      if (this.options.throwOnFailure) {
-        throw new Error('Failed to publish extension.');
-      }
-      return false;
+      throw new Error('Failed to upload zipped extension.');
+    }
+  }
+
+  /**
+   * Publishes the current draft as a new extension version.
+   * @param {ChromeWebStoreClient} webstore Chrome Web Store client used for uploading.
+   * @param {String} token OAuth 2.0 token to authenticate with.
+   * @throws when the publish fails
+   */
+  publishDraft = async (webstore, token) => {
+    const {status: statuses, statusDetail: details} = await webstore.publish('default', token);
+
+    if (statuses.includes('OK')) {
+      this.log.info('Published new extension version.');
+    } else {
+      statuses.forEach((status, i) => this.log.error(`${status}: ${details[i]}`));
+      throw new Error('Failed to publish extension.');
     }
   }
 }

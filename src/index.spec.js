@@ -2,8 +2,14 @@ import fs, {existsSync, unlinkSync} from 'fs';
 import Plugin from '.';
 import ChromeWebstoreUpload from 'chrome-webstore-upload';
 
+const mockToken = jest.fn();
 const mockUpload = jest.fn();
-jest.mock('chrome-webstore-upload', () => jest.fn(() => ({uploadExisting: mockUpload})));
+const mockPublish = jest.fn();
+jest.mock('chrome-webstore-upload', () => jest.fn(() => ({
+  fetchToken: mockToken,
+  uploadExisting: mockUpload,
+  publish: mockPublish,
+})));
 
 describe('constructor', () => {
   it('should reject unknown options', () => {
@@ -41,14 +47,42 @@ describe('makeBundle', () => {
   });
 });
 
-describe('publish', () => {
-  beforeAll(() => {
-    fs.createReadStream = jest.fn().mockImplementation();
+describe('uploadZip', () => {
+  it('should log info if successful', async () => {
+    const plugin = new Plugin({silent: true});
+    plugin.log.info = jest.fn();
+    mockUpload.mockImplementation(() => ({uploadState: 'SUCCESS'}));
+
+    await plugin.uploadZip(new ChromeWebstoreUpload(), 'token', 'C:\\fakepathtobundle.zip');
+
+    expect(plugin.log.info).toHaveBeenCalled();
   });
+
+  it('should log and throw error if unsuccessful', async () => {
+    const plugin = new Plugin({silent: true});
+    plugin.log.error = jest.fn();
+    mockUpload.mockImplementation(() => ({
+      uploadState: 'FAILURE',
+      itemError: [{error_code: '404', error_detail: 'extension not found'}],
+    }));
+
+    try {
+      await plugin.uploadZip(new ChromeWebstoreUpload(), 'token', 'C:\\fakepathtobundle.zip');
+    } catch (err) {
+      expect(plugin.log.error).toHaveBeenCalled();
+    }
+  });
+});
+
+describe('publish', () => {
+  beforeAll(() => fs.createReadStream = jest.fn().mockImplementation());
+  afterAll(() => process.env = {});
 
   it('should work with process.env vars', async () => {
     const plugin = new Plugin({silent: true});
-    mockUpload.mockImplementation(() => ({uploadState: 'IN_PROGRESS'}));
+    plugin.uploadZip = jest.fn();
+    plugin.publishDraft = jest.fn();
+
     process.env = {
       GOOGLE_EXTENSION_ID: 'hey',
       GOOGLE_CLIENT_ID: 'thats',
@@ -64,47 +98,32 @@ describe('publish', () => {
       clientSecret: 'pretty',
       refreshToken: 'good',
     });
-
-    process.env = {};
   });
+});
 
-  it('should log info and return true if successful', async () => {
+describe('publishDraft', () => {
+  it('should log info if successful', async () => {
     const plugin = new Plugin({silent: true});
     plugin.log.info = jest.fn();
-    mockUpload.mockImplementation(() => ({uploadState: 'SUCCESS'}));
+    mockPublish.mockImplementation(() => ({status: ['OK'], statusDetail: ['OK.']}));
 
-    const result = await plugin.publish('C:\\fakepathtobundle.zip');
+    await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
 
-    expect(result).toBeTruthy();
     expect(plugin.log.info).toHaveBeenCalled();
   });
 
-  it('should log error and return false if unsuccessful', async () => {
+  it('should log and throw error if unsuccessful', async () => {
     const plugin = new Plugin({silent: true});
     plugin.log.error = jest.fn();
-    mockUpload.mockImplementation(() => ({
-      uploadState: 'FAILURE',
-      itemError: [{error_code: '404', error_detail: 'extension not found'}],
-    }));
-
-    const result = await plugin.publish('C:\\fakepathtobundle.zip');
-
-    expect(result).toBeFalsy();
-    expect(plugin.log.error).toHaveBeenCalled();
-  });
-
-  it('should throw error if unsuccessful and options.throwOnFailure is true', async () => {
-    const plugin = new Plugin({silent: true, throwOnFailure: true});
-    plugin.log.error = jest.fn();
-    mockUpload.mockImplementation(() => ({
-      uploadState: 'FAILURE',
-      itemError: [{error_code: '404', error_detail: 'extension not found'}],
+    mockPublish.mockImplementation(() => ({
+      status: ['ITEM_PENDING_REVIEW'],
+      statusDetail: ['foobar'],
     }));
 
     try {
-      await plugin.publish('C:\\fakepathtobundle.zip');
+      await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
     } catch (err) {
-      expect(err).toBeInstanceOf(Error);
+      expect(plugin.log.error).toHaveBeenCalled();
     }
   });
 });
@@ -131,6 +150,10 @@ describe('apply', () => {
 });
 
 describe('afterEmit', () => {
+  fs.unlinkSync = jest.fn();
+
+  beforeEach(fs.unlinkSync.mockReset);
+
   it('should use options.path if provided', async () => {
     const plugin = new Plugin({path: 'c:\\fakepath'});
     plugin.makeBundle = jest.fn();
@@ -153,9 +176,8 @@ describe('afterEmit', () => {
 
   it('should not delete zip if options.keepBundleOnSuccess is true', async () => {
     const plugin = new Plugin({keepBundleOnSuccess: true, path: 'c:\\fakepath'});
-    fs.unlinkSync = jest.fn();
     plugin.makeBundle = jest.fn();
-    plugin.publish = jest.fn(() => Promise.resolve(true));
+    plugin.publish = jest.fn();
 
     await plugin.afterEmit();
 
