@@ -10,6 +10,7 @@ Thanks for your interest in contributing! ❤
 * [Developing](#developing)
 * [Testing](#testing)
 * [Linting](#linting)
+* [Releasing](#releasing)
 
 ## Dependencies
 
@@ -80,3 +81,13 @@ $ npm run lint
 ```
 
 This runs `eslint` using our [style configuration](/.eslintrc).
+
+## Releasing
+
+Once everything looks good, use the following command to release on npm and GitHub.
+
+```console
+$ npm version $semver
+```
+
+`$semver` must be a valid semver version string (preferrably `patch`, `minor`, and `major`). See the [`npm-version docs`](https://docs.npmjs.com/cli/version#description) for more info.

@@ -26,7 +26,10 @@
     "test": "jest --coverage",
     "lint": "eslint .",
     "vuln": "npm-audit-ci",
-    "prepack": "npm start"
+    "preversion": "npm test && npm run lint && npm run vuln",
+    "prepack": "npm start",
+    "version": "npm publish",
+    "postversion": "git push && git push --tags"
   },
   "peerDependencies": {
     "webpack": "^4.0.0"
