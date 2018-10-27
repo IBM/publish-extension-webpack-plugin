@@ -15,3 +15,7 @@ script:
 - npm test && codecov
 - npm run lint
 - npm run vuln
+
+branches:
+  only:
+  - master
