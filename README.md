@@ -83,6 +83,23 @@ If not provided via options, this must be present in your environment as `GOOGLE
 $ GOOGLE_REFRESH_TOKEN=refreshtokengoeshere123 webpack
 ```
 
+### `target`
+
+Type: `String`
+Default: `default`
+
+The publish [target](https://developer.chrome.com/docs/webstore/webstore_api/items/publish/) for the extension:
+- `default` - the extension will be available to everyone (published as public extension).
+- `trustedTesters` - the extension will be available only to trusted testers (published as private extension).
+- `draft` - the extension will be uploaded to the store, but not published.
+
+```js
+// in your webpack.config.js
+new PublishExtensionPlugin({
+  target: 'trustedTesters',
+})
+```
+
 ### `path`
 
 Type: `String`
