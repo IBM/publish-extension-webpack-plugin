@@ -1,11 +1,10 @@
 {
-  "name": "publish-extension-webpack-plugin",
+  "name": "@mixmaxhq/publish-extension-webpack-plugin",
   "version": "2.0.0",
   "description": "A webpack plugin that publishes extension builds to the Chrome Web Store.",
-  "author": "Borja Canseco <borj@cans.eco> (https://full.stack.dev)",
-  "repository": "github:ibm/publish-extension-webpack-plugin",
-  "homepage": "https://github.com/ibm/publish-extension-webpack-plugin",
-  "bugs": "https://github.com/ibm/publish-extension-webpack-plugin/issues",
+  "author": "Mixmax <hello@mixmax.com> (https://mixmax.com)",
+  "repository": "github:mixmaxhq/publish-extension-webpack-plugin",
+  "homepage": "https://github.com/mixmaxhq/publish-extension-webpack-plugin",
   "license": "Apache-2.0",
   "keywords": [
     "chrome",
@@ -22,14 +21,14 @@
   "main": "dist/publish-extension-webpack-plugin.js",
   "scripts": {
     "example": "webpack --config example/webpack.config.babel.js",
-    "start": "webpack",
+    "build": "webpack",
     "test": "jest --coverage",
     "lint": "eslint .",
-    "vuln": "npm-audit-ci",
-    "preversion": "npm test && npm run lint && npm run vuln",
-    "prepack": "npm start",
-    "version": "npm publish",
-    "postversion": "git push && git push --tags"
+    "prepare": "npm run build",
+    "ci": "npm run lint && npm test",
+    "ci:commitlint": "commitlint-jenkins --pr-only",
+    "prepublishOnly": "npm run build && if [ \"$CI\" = '' ] && [ \"$npm_config_dry_run\" != true ]; then node -p 'JSON.parse(process.env.npm_package_config_manualPublishMessage)'; exit 1; fi",
+    "semantic-release": "SEMANTIC_COMMITLINT_SKIP=4febd2d,9d72d63,2e81149 semantic-release"
   },
   "peerDependencies": {
     "webpack": "^4.0.0"
@@ -42,6 +41,10 @@
     "@babel/preset-env": "^7.1.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime": "^7.1.2",
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@mixmaxhq/commitlint-jenkins": "^1.4.2",
+    "@mixmaxhq/semantic-release-config": "^2.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^23.6.0",
@@ -50,6 +53,7 @@
     "chrome-webstore-upload": "^0.2.2",
     "clean-webpack-plugin": "^0.1.19",
     "copy-webpack-plugin": "^4.5.3",
+    "cz-conventional-changelog": "^3.1.0",
     "dotenv-safe": "^6.1.0",
     "eslint": "^5.7.0",
     "eslint-config-google": "^0.11.0",
@@ -58,8 +62,26 @@
     "jest": "^23.6.0",
     "npm-audit-ci": "^1.0.1",
     "schema-utils": "^1.0.0",
+    "semantic-release": "^17.2.3",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
     "webpack-log": "^2.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "manualPublishMessage": "This repository is configured to use semantic-release for its releases. Please do not release manually.\n"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release": {
+    "extends": "@mixmaxhq/semantic-release-config"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

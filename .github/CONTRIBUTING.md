@@ -20,7 +20,7 @@ Thanks for your interest in contributing! ❤
 ## Installing
 
 ```console
-$ git clone https://github.com/ibm/publish-extension-webpack-plugin
+$ git clone https://github.com/mixmaxhq/publish-extension-webpack-plugin
 $ cd publish-extension-webpack-plugin
 $ npm install
 ```
@@ -28,7 +28,7 @@ $ npm install
 ## Building
 
 ```console
-$ npm start
+$ npm run build
 ```
 
 This spits out the compiled plugin inside `dist/` using our [webpack config](/webpack.config.babel.js).
@@ -81,13 +81,3 @@ $ npm run lint
 ```
 
 This runs `eslint` using our [style configuration](/.eslintrc).
-
-## Releasing
-
-Once everything looks good, use the following command to release on npm and GitHub.
-
-```console
-$ npm version $semver
-```
-
-`$semver` must be a valid semver version string (preferrably `patch`, `minor`, and `major`). See the [`npm-version docs`](https://docs.npmjs.com/cli/version#description) for more info.

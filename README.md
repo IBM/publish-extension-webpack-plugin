@@ -4,9 +4,7 @@
   </a>
 </div>
 
-[![npm][npm]][npm-url]
-[![travis][travis]][travis-url]
-[![cover][cover]][cover-url]
+[![Build Status](https://jenkins-external.mixmax.com/buildStatus/icon?job=mixmaxhq%2Fpublish-extension-webpack-plugin%2Fmaster)](https://jenkins.mixmax.com/job/mixmaxhq/job/publish-extension-webpack-plugin/job/master/)
 
 # Publish Extension Webpack Plugin
 
@@ -14,10 +12,10 @@
 
 ## Getting Started
 
-To begin, you'll need to install `publish-extension-webpack-plugin`:
+To begin, you'll need to install `@mixmaxhq/publish-extension-webpack-plugin`:
 
 ```console
-$ npm install publish-extension-webpack-plugin --save-dev
+$ npm install @mixmaxhq/publish-extension-webpack-plugin --save-dev
 ```
 
 Then add the plugin to your `webpack` config. For example:
@@ -25,7 +23,7 @@ Then add the plugin to your `webpack` config. For example:
 **webpack.config.babel.js**
 
 ```js
-import PublishExtensionPlugin from 'publish-extension-webpack-plugin';
+import PublishExtensionPlugin from '@mixmaxhq/publish-extension-webpack-plugin';
 
 export default {
   // ...
@@ -144,10 +142,3 @@ new PublishExtensionPlugin({
 ## Contributing
 
 PRs are welcome! Please see the [contributing guide](.github/CONTRIBUTING.md).
-
-[npm]: https://img.shields.io/npm/v/publish-extension-webpack-plugin.svg
-[npm-url]: https://npmjs.com/package/publish-extension-webpack-plugin
-[travis]: https://travis-ci.com/IBM/publish-extension-webpack-plugin.svg?branch=master
-[travis-url]: https://travis-ci.com/IBM/publish-extension-webpack-plugin
-[cover]: https://img.shields.io/codecov/c/github/IBM/publish-extension-webpack-plugin.svg
-[cover-url]: https://codecov.io/gh/IBM/publish-extension-webpack-plugin
