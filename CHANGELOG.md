@@ -1,3 +1,10 @@
+### [1.1.1](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.1.0...v1.1.1) (2022-10-28)
+
+
+### Bug Fixes
+
+* correct entrypoint ([7e1ef18](https://github.com/mixmaxhq/publish-extension-webpack-plugin/commit/7e1ef183cdae03e0ff9e1f670a269fd43e557c4d))
+
 ## [1.1.0](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.0.0...v1.1.0) (2022-10-28)
 
 
