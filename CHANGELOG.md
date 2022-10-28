@@ -1,3 +1,10 @@
+## [1.1.0](https://github.com/mixmaxhq/publish-extension-webpack-plugin/compare/v1.0.0...v1.1.0) (2022-10-28)
+
+
+### Features
+
+* add target option ([7e38046](https://github.com/mixmaxhq/publish-extension-webpack-plugin/commit/7e38046a3cab8fc3ba3fcd5b3bdcfbba9d2b3b21))
+
 ## 1.0.0 (2022-10-28)
 
 
