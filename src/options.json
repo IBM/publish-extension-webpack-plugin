@@ -13,6 +13,9 @@
     "refreshToken": {
       "type": "string"
     },
+    "target": {
+      "enum": ["default", "draft", "trustedTesters"]
+    },
     "path": {
       "type": "string"
     },

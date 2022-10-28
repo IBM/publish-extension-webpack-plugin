@@ -19,6 +19,7 @@ export default class PublishExtensionPlugin {
    * @param {String} [options.clientId] Google OAuth 2.0 client ID
    * @param {String} [options.clientSecret] Google OAuth 2.0 client secret
    * @param {String} [options.refreshToken] Google OAuth 2.0 refresh token
+   * @param {String} [options.target="default"] Publish target.
    * @param {String} [options.path] Path to a directory containing a manifest.json file.
    * If omitted, webpack's output.path directory will be used.
    * @param {Boolean} [options.keepBundleOnSuccess=false] Set true to keep the ZIP if publishing is successful.
@@ -118,7 +119,13 @@ export default class PublishExtensionPlugin {
    * @throws when the publish fails
    */
   publishDraft = async (webstore, token) => {
-    const {status: statuses, statusDetail: details} = await webstore.publish('default', token);
+    const {target = 'default'} = this.options;
+
+    if (target === 'draft') {
+      this.log.info('Skipping the publishing step.');
+      return;
+    }
+    const {status: statuses, statusDetail: details} = await webstore.publish(target, token);
 
     if (statuses.includes('OK')) {
       this.log.info('Published new extension version.');
