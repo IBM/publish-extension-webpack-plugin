@@ -18,7 +18,7 @@
   "files": [
     "dist"
   ],
-  "main": "dist/publish-extension-webpack-plugin.js",
+  "main": "dist/@mixmaxhq/publish-extension-webpack-plugin.js",
   "scripts": {
     "example": "webpack --config example/webpack.config.babel.js",
     "build": "webpack",
