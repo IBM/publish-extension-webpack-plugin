@@ -12,6 +12,10 @@ jest.mock('chrome-webstore-upload', () => jest.fn(() => ({
   publish: mockPublish,
 })));
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
+
 describe('constructor', () => {
   it('should reject unknown options', () => {
     expect(() => new Plugin({foo: 'bar'})).toThrow();
@@ -19,6 +23,10 @@ describe('constructor', () => {
 
   it('should reject invalid option type', () => {
     expect(() => new Plugin({silent: 'not a boolean'})).toThrow();
+  });
+
+  it('should reject invalid option enum value', () => {
+    expect(() => new Plugin({target: 'invalid'})).toThrow();
   });
 
   it('should set this.options', () => {
@@ -178,7 +186,8 @@ describe('publishDraft', () => {
 
     await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
 
-    expect(plugin.log.info).toHaveBeenCalled();
+    expect(mockPublish).toHaveBeenCalledWith('default', 'token');
+    expect(plugin.log.info).toHaveBeenCalledWith('Published new extension version.');
   });
 
   it('should log and throw error if unsuccessful', async () => {
@@ -192,7 +201,30 @@ describe('publishDraft', () => {
     try {
       await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
     } catch (err) {
-      expect(plugin.log.error).toHaveBeenCalled();
+      expect(mockPublish).toHaveBeenCalledWith('default', 'token');
+      expect(plugin.log.error).toHaveBeenCalledWith('ITEM_PENDING_REVIEW: foobar');
     }
+  });
+
+  it('should log info and publish as private if options.target is trustedTesters', async () => {
+    const plugin = new Plugin({target: 'trustedTesters'});
+    plugin.log.info = jest.fn();
+    mockPublish.mockImplementation(() => ({status: ['OK'], statusDetail: ['OK.']}));
+
+    await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
+
+    expect(mockPublish).toHaveBeenCalledWith('trustedTesters', 'token');
+    expect(plugin.log.info).toHaveBeenCalledWith('Published new extension version.');
+  });
+
+  it('should long info and skip publish if options.target is draft', async () => {
+    const plugin = new Plugin({target: 'draft'});
+    plugin.log.info = jest.fn();
+    mockPublish.mockImplementation(() => ({status: ['OK'], statusDetail: ['OK.']}));
+
+    await plugin.publishDraft(new ChromeWebstoreUpload(), 'token');
+
+    expect(mockPublish).not.toHaveBeenCalled();
+    expect(plugin.log.info).toHaveBeenCalledWith('Skipping the publishing step.');
   });
 });
